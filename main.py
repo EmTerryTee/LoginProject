@@ -2,7 +2,6 @@ import tkinter
 import string
 from tkinter import *
 from tkinter import messagebox
-
 import bcrypt
 
 account_list = []

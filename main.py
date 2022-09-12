@@ -6,7 +6,7 @@ import bcrypt
 
 account_list = []
 print(account_list)
-print("hello world")
+
 
 def buttonclick():
     while True:

@@ -4,63 +4,79 @@ from tkinter import *
 from tkinter import messagebox
 import bcrypt
 
-global account_list
 account_list = []
 
 root = Tk()
-root.title("Login Portal")
+root.title("Cosmos")
 root.geometry("300x500")
-icon = PhotoImage(file='projecticon.png')
+icon = PhotoImage(file='planeticon.png')
+bg = PhotoImage(file='appbg.png')
 root.iconphoto(True, icon)
 root.resizable(width=False, height=False)
 
 
 class Window:
     def __init__(self, master):
+        # App Background image
+        bg_frame = Frame(master)
+        bg_frame.grid(row=0, column=0)
+        self.bg_image = Label(bg_frame,
+                              image=bg)
+        self.bg_image.grid(row=0, column=0)
+
+        # Widget Frame
+        widget_frame = Frame(master)
+        widget_frame.grid(row=1, column=0)
+
         # User entry box
-        self.user_entry = Entry(master,
+        self.user_entry = Entry(widget_frame,
                                 font=("Comic Sans", 11))
-        self.user_entry.place(x=68, y=345)
-        self.user_label = Label(master,
+        self.user_entry.grid(row=1,column=2)
+        self.user_label = Label(widget_frame,
                                 text="Username",
-                                font=("Comic Sans", 7))
-        self.user_label.place(x=68, y=325)
+                                font=("Comic Sans", 7),
+                                compound='bottom')
+        self.user_label.grid(row=1,column=1)
 
         # Pass enter box
-        self.pass_entry = Entry(master,
+        self.pass_entry = Entry(widget_frame,
                                 font=("Comic Sans", 11),
                                 show="*")
-        self.pass_entry.place(x=68, y=385)
+        self.pass_entry.grid(row=2,column=2)
 
-        self.pass_label = Label(master,
+        self.pass_label = Label(widget_frame,
                                 text="Password",
                                 font=("Comic Sans", 7))
-        self.pass_label.place(x=68, y=367)
+        self.pass_label.grid(row=2,column=1)
 
         # Register Button
-        self.registerbutton = Button(master,
-                                     text="Register",
-                                     font=("Comic Sans", 9),
-                                     command=self.register_click)
-        self.registerbutton.place(x=105, y=415)
+        self.register_button = Button(widget_frame,
+                                      text="Register",
+                                      font=("Comic Sans", 9),
+                                      width=9,
+                                      height=1,
+                                      command=self.register_click)
+        self.register_button.grid(row=3,column=1)
 
         # Login Button
-        self.loginbutton = Button(master,
-                                  text="Login",
-                                  font=("Comic Sans", 9),
-                                  command=self.login_click)
-        self.loginbutton.place(x=105, y=415)
+        self.login_button = Button(widget_frame,
+                                   text="Login",
+                                   font=("Comic Sans", 9),
+                                   width=9,
+                                   height=1,
+                                   command=self.login_click)
+        self.login_button.grid(row=3,column=2)
 
-    def blackfieldmsg(self):
+    def blank_field_register_msg(self):
         tkinter.messagebox.showinfo(title="We've hit a snag..."
-                                    , message="Please fill both fields before logging in.")
+                                    , message="Please fill both fields.")
 
-    def checkpassmsg(self):
+    def check_pass_msg(self):
         tkinter.messagebox.showinfo(title="We've hit a snag..."
                                     , message="Password must contain an uppercase letter, a number, and a "
                                               "punctuation character.")
 
-    def regcompletemsg(self):
+    def reg_complete_msg(self):
         tkinter.messagebox.showinfo(title="Registration Complete"
                                     , message="Successfully Registered.\nThank you for joining our service!")
 
@@ -72,7 +88,7 @@ class Window:
             cap_count = 0
             num_count = 0
             if user_field == "" or password_field == "":
-                self.blackfieldmsg()
+                self.blank_field_register_msg()
                 print(account_list)
                 break
             for letter in password_field:
@@ -83,10 +99,10 @@ class Window:
                 if letter in "1234567890":
                     num_count += 1
             if punc_count == 0 or cap_count == 0 or num_count == 0:
-                self.checkpassmsg()
+                self.check_pass_msg()
                 break
             else:
-                self.regcompletemsg()
+                self.reg_complete_msg()
                 encode = password_field.encode('utf-8')
                 hashed = bcrypt.hashpw(encode, bcrypt.gensalt(10))
                 account_list.append({user_field: hashed})
@@ -95,5 +111,6 @@ class Window:
 
     def login_click(self):
         print("Clicked login button")
+
 
 MyWindow = Window(root)

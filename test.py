@@ -10,30 +10,24 @@ win = Tk()
 win.title("Test Window")
 win.geometry("300x300")
 
-widgetframe = Frame(win,
-                    bd = 10,
-                    relief=FLAT,
-                    background="black"
-                    )
+wf = Frame(win,
+           bd=10,
+           relief=FLAT,
+           background="black")
+wf.place(x=120, y=100)
 
+txt = Canvas(wf, height=10, width=20)
+txt.create_text((20, 20), text="Hello")
+txt.pack()
 
-widgetframe.place(x=120,y=100)
-
-text = Canvas(widgetframe, height=100, width=100)
-text.create_text((20,20), text="Hello douchebag")
-text.pack()
-
-entry = Entry(widgetframe)
+entry = Entry(wf)
 entry.place(x=0, y=27)
 
 cnt = 0
-
 for i in font.families():
     if i == "Consolas":
-        cnt +=1
-    else:
-        pass
+        cnt += 1
 if cnt == 0:
     print("Not found")
-if cnt > 0:
+else:
     print("Found")

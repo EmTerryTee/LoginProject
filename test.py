@@ -1,10 +1,6 @@
-import tkinter
-import string
-import re
-from tkinter import Tk, font
+from tkinter import font
 from tkinter import *
-from tkinter import messagebox
-import bcrypt
+
 
 win = Tk()
 win.title("Test Window")

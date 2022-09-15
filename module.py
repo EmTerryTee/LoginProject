@@ -9,9 +9,10 @@ account_list = []
 
 root = Tk()
 root.title("Cosmos")
-root.geometry("300x500")
+root.geometry("300x300")
 icon = PhotoImage(file='planeticon.png')
 bg = PhotoImage(file='appbg.png')
+entrybg = PhotoImage(file='entrybg.png')
 root.iconphoto(True, icon)
 root.resizable(width=False, height=False)
 
@@ -22,55 +23,65 @@ class Window:
         bg_frame = Frame(master)
         bg_frame.pack()
         self.bg_image = Label(bg_frame,
-                              image=bg)
+                              image=bg,
+                              cursor="dot")
         self.bg_image.pack()
 
-        # Widget Frame
-        widget_frame = Frame(master,
-                             width=138,
-                             height=120)
-        widget_frame.place(x=75, y=350)
+        # Entry & button Frame
+        entry_frame = Frame(master,
+                            width=138,
+                            height=120,
+                            cursor="dot")
+        entry_frame.place(x=80, y=160)
+
+        self.bglabel = Label(entry_frame,
+                             image=entrybg,
+                             bg="#4D485E")
+        self.bglabel.pack()
 
         # User entry box
-        self.user_entry = Entry(widget_frame,
+        self.user_entry = Entry(entry_frame,
                                 width=15,
                                 font=("Comic Sans", 11))
-        self.user_entry.place(x=7, y=18)
-        self.user_label = Label(widget_frame,
+        self.user_entry.place(x=8, y=20)
+        self.user_label = Label(entry_frame,
                                 text="Username",
                                 font=("Comic Sans", 7),
-                                compound='bottom')
-        self.user_label.place(x=10, y=0)
+                                bg="#01090F",
+                                fg="white")
+        self.user_label.place(x=10, y=2)
 
         # Pass enter box
-        self.pass_entry = Entry(widget_frame,
+        self.pass_entry = Entry(entry_frame,
                                 width=15,
                                 font=("Comic Sans", 11),
                                 show="*")
-        self.pass_entry.place(x=7, y=60)
+        self.pass_entry.place(x=8, y=61)
 
-        self.pass_label = Label(widget_frame,
+        self.pass_label = Label(entry_frame,
                                 text="Password",
-                                font=("Comic Sans", 7))
-        self.pass_label.place(x=10, y=41)
+                                font=("Comic Sans", 7),
+                                bg="#01090F",
+                                fg="white")
+        self.pass_label.place(x=10, y=42)
 
         # Register Button
-        self.register_button = Button(widget_frame,
+        self.register_button = Button(entry_frame,
                                       text="Register",
                                       font=("Comic Sans", 9),
                                       width=7,
                                       height=1,
                                       command=self.register_click)
-        self.register_button.place(x=6, y=88)
+        self.register_button.place(x=8, y=89)
 
         # Login Button
-        self.login_button = Button(widget_frame,
+        self.login_button = Button(entry_frame,
                                    text="Login",
                                    font=("Comic Sans", 9),
                                    width=7,
                                    height=1,
                                    command=self.login_click)
-        self.login_button.place(x=72, y=88)
+        self.login_button.place(x=74, y=89)
 
     def validate_email(self, user_field):
         regex_check = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -124,11 +135,11 @@ class Window:
                 encode = password_field.encode('utf-8')
                 hashed = bcrypt.hashpw(encode, bcrypt.gensalt(10))
                 account_list.append({user_field: hashed})
-                print(account_list)
+                print("Need to store this in db somehow", account_list)
                 break
 
     def login_click(self):
-        print("Clicked login button")
+        print("Needs to check db somehow")
 
 
 MyWindow = Window(root)

@@ -117,7 +117,6 @@ class Window:
             num_count = 0
             if user_field == "" or password_field == "":
                 self.blank_field_register_error_msg()
-                print(account_list)
                 break
             if self.validate_email(user_field) is False:
                 self.invalid_email_error_msg()

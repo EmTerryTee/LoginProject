@@ -12,7 +12,7 @@ root.title("Cosmos")
 root.geometry("300x300")
 icon = PhotoImage(file='planeticon.png')
 bg = PhotoImage(file='appbg.png')
-entrybg = PhotoImage(file='entrybg.png')
+entry_bg = PhotoImage(file='entrybg.png')
 root.iconphoto(True, icon)
 root.resizable(width=False, height=False)
 
@@ -30,58 +30,60 @@ class Window:
         # Entry & button Frame
         entry_frame = Frame(master,
                             width=138,
-                            height=120,
+                            height=100,
                             cursor="dot")
-        entry_frame.place(x=80, y=160)
+        entry_frame.place(x=82, y=180)
 
         self.bglabel = Label(entry_frame,
-                             image=entrybg,
-                             bg="#4D485E")
+                             image=entry_bg,
+                             bg="#816271")
         self.bglabel.pack()
 
         # User entry box
         self.user_entry = Entry(entry_frame,
-                                width=15,
-                                font=("Comic Sans", 11))
-        self.user_entry.place(x=8, y=20)
-        self.user_label = Label(entry_frame,
-                                text="Username",
-                                font=("Comic Sans", 7),
-                                bg="#01090F",
-                                fg="white")
-        self.user_label.place(x=10, y=2)
+                                width=17,
+                                bg='#816271',
+                                font=("Consolas", 10),
+                                fg="#F6D6BC",
+                                relief=FLAT)
+        self.user_entry.place(x=9, y=9)
+
 
         # Pass enter box
         self.pass_entry = Entry(entry_frame,
-                                width=15,
-                                font=("Comic Sans", 11),
-                                show="*")
-        self.pass_entry.place(x=8, y=61)
+                                width=17,
+                                bg='#816271',
+                                font=("Consolas", 10),
+                                show="*",
+                                fg="#F6D6BC",
+                                relief=FLAT)
+        self.pass_entry.place(x=9, y=37)
 
-        self.pass_label = Label(entry_frame,
-                                text="Password",
-                                font=("Comic Sans", 7),
-                                bg="#01090F",
-                                fg="white")
-        self.pass_label.place(x=10, y=42)
+
 
         # Register Button
         self.register_button = Button(entry_frame,
                                       text="Register",
-                                      font=("Comic Sans", 9),
+                                      font=("Consolas", 9),
+                                      fg=("#F6D6BC"),
                                       width=7,
                                       height=1,
+                                      relief=FLAT,
+                                      bg='#816271',
                                       command=self.register_click)
-        self.register_button.place(x=8, y=89)
+        self.register_button.place(x=9, y=67)
 
         # Login Button
         self.login_button = Button(entry_frame,
                                    text="Login",
-                                   font=("Comic Sans", 9),
+                                   font=("Consolas", 9),
+                                   fg=("#F6D6BC"),
                                    width=7,
                                    height=1,
+                                   relief=FLAT,
+                                   bg='#816271',
                                    command=self.login_click)
-        self.login_button.place(x=74, y=89)
+        self.login_button.place(x=73, y=67)
 
     def validate_email(self, user_field):
         regex_check = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'

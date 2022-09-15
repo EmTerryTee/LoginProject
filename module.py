@@ -1,5 +1,6 @@
 import tkinter
 import string
+import re
 from tkinter import *
 from tkinter import messagebox
 import bcrypt
@@ -19,66 +20,80 @@ class Window:
     def __init__(self, master):
         # App Background image
         bg_frame = Frame(master)
-        bg_frame.grid(row=0, column=0)
+        bg_frame.pack()
         self.bg_image = Label(bg_frame,
                               image=bg)
-        self.bg_image.grid(row=0, column=0)
+        self.bg_image.pack()
 
         # Widget Frame
-        widget_frame = Frame(master)
-        widget_frame.grid(row=1, column=0)
+        widget_frame = Frame(master,
+                             width=138,
+                             height=120)
+        widget_frame.place(x=75, y=350)
 
         # User entry box
         self.user_entry = Entry(widget_frame,
+                                width=15,
                                 font=("Comic Sans", 11))
-        self.user_entry.grid(row=1,column=2)
+        self.user_entry.place(x=7, y=18)
         self.user_label = Label(widget_frame,
                                 text="Username",
                                 font=("Comic Sans", 7),
                                 compound='bottom')
-        self.user_label.grid(row=1,column=1)
+        self.user_label.place(x=10, y=0)
 
         # Pass enter box
         self.pass_entry = Entry(widget_frame,
+                                width=15,
                                 font=("Comic Sans", 11),
                                 show="*")
-        self.pass_entry.grid(row=2,column=2)
+        self.pass_entry.place(x=7, y=60)
 
         self.pass_label = Label(widget_frame,
                                 text="Password",
                                 font=("Comic Sans", 7))
-        self.pass_label.grid(row=2,column=1)
+        self.pass_label.place(x=10, y=41)
 
         # Register Button
         self.register_button = Button(widget_frame,
                                       text="Register",
                                       font=("Comic Sans", 9),
-                                      width=9,
+                                      width=7,
                                       height=1,
                                       command=self.register_click)
-        self.register_button.grid(row=3,column=1)
+        self.register_button.place(x=6, y=88)
 
         # Login Button
         self.login_button = Button(widget_frame,
                                    text="Login",
                                    font=("Comic Sans", 9),
-                                   width=9,
+                                   width=7,
                                    height=1,
                                    command=self.login_click)
-        self.login_button.grid(row=3,column=2)
+        self.login_button.place(x=72, y=88)
 
-    def blank_field_register_msg(self):
-        tkinter.messagebox.showinfo(title="We've hit a snag..."
-                                    , message="Please fill both fields.")
+    def validate_email(self, user_field):
+        regex_check = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        if re.match(regex_check, user_field):
+            return True
+        return False
 
-    def check_pass_msg(self):
-        tkinter.messagebox.showinfo(title="We've hit a snag..."
-                                    , message="Password must contain an uppercase letter, a number, and a "
-                                              "punctuation character.")
+    def blank_field_register_error_msg(self):
+        tkinter.messagebox.showinfo(title="We've hit a snag...",
+                                    message="Please fill both fields.")
+
+    def invalid_email_error_msg(self):
+        tkinter.messagebox.showinfo(title="We've hit a snag...",
+                                    message="Please enter a valid email address")
+
+    def check_pass_error_msg(self):
+        tkinter.messagebox.showinfo(title="We've hit a snag...",
+                                    message="Password must contain an uppercase letter, a number, and a "
+                                            "punctuation character.")
 
     def reg_complete_msg(self):
-        tkinter.messagebox.showinfo(title="Registration Complete"
-                                    , message="Successfully Registered.\nThank you for joining our service!")
+        tkinter.messagebox.showinfo(title="Registration Complete",
+                                    message="Successfully Registered.\nThank you for joining our service!")
 
     def register_click(self):
         while True:
@@ -88,8 +103,11 @@ class Window:
             cap_count = 0
             num_count = 0
             if user_field == "" or password_field == "":
-                self.blank_field_register_msg()
+                self.blank_field_register_error_msg()
                 print(account_list)
+                break
+            if self.validate_email(user_field) is False:
+                self.invalid_email_error_msg()
                 break
             for letter in password_field:
                 if letter in string.punctuation:
@@ -99,7 +117,7 @@ class Window:
                 if letter in "1234567890":
                     num_count += 1
             if punc_count == 0 or cap_count == 0 or num_count == 0:
-                self.check_pass_msg()
+                self.check_pass_error_msg()
                 break
             else:
                 self.reg_complete_msg()
